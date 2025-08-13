@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+
+    <body>
+        <div id="mainApp">
+            <h1>{{title}}</h1>
+            <p v-show="userData.age > 10">My name is {{userData.name}} [ {{userData.gender}} ] of {{userData.age}} old!</p>
+
+            <input type="text" v-on:keyup.enter="onPressEnter($event)"> <br /> <br />
+
+            <input type="text" v-model="firstname" /> <br /> <br />
+            <input type="text" v-model="lastname" /> <br /> <br />
+            <p>Fullname: {{getFullname}}</p>
+
+            <button v-on:click="onButtonClick('Vue is exiting!!')">Click Me</button> <br /> <br />
+            <button v-on:click="onSubmit">Submit Form</button> <br /> <br />
+            <p>Counter : {{increment}}</p>
+            <button v-on:click="increase">Increment</button>
+        </div>
+    </body>
+
+    <script>
+        const { createApp, ref, reactive, computed, watch } = Vue;
+
+        createApp({
+
+            setup(){
+
+                const title = ref("Vue Fundamentals");
+
+                const userData = reactive({
+                    name: "Maduka Pcm", 
+                    age: 27,  
+                    gender: "Male"
+                })
+
+                let firstname = ref("");
+                let lastname = ref("");
+
+                const increment = ref(0);
+
+                function onSubmit(){
+                    alert("Form submitted with "+firstname.value+" "+lastname.value);
+                }
+
+                // computed property... 
+                const getFullname = computed(() => {
+                    return firstname.value + " "+ lastname.value;
+                })
+
+                function increase(){
+                  increment.value ++;
+                }
+
+                watch(() => increment.value,(newValue,oldValue) => {
+                    if(newValue == 5){
+                        alert("Counter reached "+newValue);
+                    }
+                })
+
+                function onButtonClick(message){
+                    alert(message);
+                }
+
+                function onPressEnter(event){
+                    alert("Press Enter clicked!!"+$event.title);
+                }
+
+                return {
+                    title,  
+                    userData, 
+                    firstname,
+                    lastname,
+                    onButtonClick, 
+                    onPressEnter, 
+                    onSubmit, 
+                    getFullname, 
+                    increment,
+                    increase, 
+                    
+                }
+            }
+        }).mount("#mainApp");
+    </script>
+</html>

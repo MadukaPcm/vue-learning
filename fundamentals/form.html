@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+        <title>Vue learning [ Form Handling ]</title>
+    </head>
+
+    <body>
+        <div id="main">
+            <h2>Form handling</h2>
+            <form v-on:submit.prevent="onSubmitForm()">
+
+                <p v-if="errorMessages.length > 0"> 
+                    <strong style="color:red; font-weight:bold;">Errors:</strong>
+                    <ul>
+                        <li v-for="error in errorMessages" style="color:red;">{{error}}</li>
+                    </ul>
+                </p>
+
+                <label>Name: </label>
+                <input type="text" v-model.trim="formData.name" placeholder="Enter valid name" required /> <br /><br />
+
+                <label>Email:</label>
+                <input type="email" v-model.trim="formData.email" placeholder="Enter valid email" required /> <br /><br />
+
+                <label>Phone number:</label>
+                <input type="text" v-model="formData.phone" placeholder="Enter phone number" required /> <br /><br />
+
+                <label>Date of birth [ DOB ]</label>
+                <input type="date" v-model="formData.dob" placeholder="Enter date of birth!" required /> <br /><br />
+
+                <input type="checkbox" v-model="formData.subscribe" /> Subscribe Here <br /><br />
+
+                <label>Gender:</label>
+                <input type="radio" v-model="formData.gender" value="Male" />Male
+                <input type="radio" v-model="formData.gender" value="Female" />Female <br /><br />
+
+                <label>Select Role</label>
+                <select v-model="formData.role">
+                    <option value="User" selected>User Role</option>
+                    <option value="Admin" selected>Admin Role</option>
+                </select> <br /><br />
+
+                <button>Submit</button>
+            </form>
+        </div>
+    </body>
+
+    <script>
+        const { createApp, ref, reactive, computed, watch } = Vue;
+
+        createApp({
+
+            setup(){
+
+                const errorMessages = ref([]);
+
+                const formData = reactive({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    dob: "",
+                    subscribe: false,
+                    gender: "Male",
+                    role: "User"
+                });
+
+                function onSubmitForm() {
+
+                    errorMessages.value = [];
+
+                    if(isNaN(formData.phone)){
+                        errorMessages.value.push("Enter valid phone number!")
+                    }
+
+                    if(formData.phone.length < 10){
+                        errorMessages.value.push("Phone number must be equal to 10 digits!");
+                    }
+
+                    if (formData.name.length < 3){
+                        errorMessages.value.push("Name can not be shorter that 3 characters!");
+                    } 
+
+                    alert("Form submitted data: \n"+
+                        "Name: "+formData.name+"\n"+
+                        "Email: "+formData.email+"\n"+
+                        "phone: "+formData.phone+"\n"+
+                        "DOB: "+formData.dob+"\n"+
+                        "subscribe: "+formData.subscribe+"\n"+
+                        "Gender: "+formData.gender+"\n"+
+                        "Role: "+formData.role+"\n"
+                    );
+                }
+
+                return {
+                    errorMessages,
+                    formData,
+                    onSubmitForm
+                }
+            }
+        }).mount("#main");
+    </script>
+
+</html>

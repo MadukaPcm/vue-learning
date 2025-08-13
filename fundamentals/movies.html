@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html leng="en">
+
+<head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Vue Js fundamentals MOVIEs App</title>
+</head>
+
+<body>
+    <div id="mainApp">
+        <h2>Manage and add movie</h2>
+        <label>Movie Title</label>
+        <input type="type" v-model.trim="newMovie.title" placeholder="Enter movie title" required/>
+        <br /><br />
+        <label>Movie year</label>
+        <input type="number" v-model="newMovie.year" placeholder="Enter movie year" required/>
+        <br /><br />
+        <label>Actions</label> <br />
+        <!-- Shortcut for v-on: is @ eg:  v-on:click is @click -->
+        <button @click="addMoview">Add Movie</button> &nbsp; &nbsp; 
+        <button @click="removeMovie">Remove movie</button>
+
+        <br /><br />
+        <hr />
+        <label>Movies</label>
+
+        <!-- /* Displaying list of movies using normal way */ -->
+        <ul>
+            <li v-for="movie in movies">{{movie.title}} - {{movie.year}}</li>
+        </ul>
+
+        <!-- /* Displaying list of movies using functions */ -->
+        <p v-if="movies.length >= 5" style="color:red;">You can add only five movies</p>
+        <ul>
+            <li v-for="movie in getAllMoviewInText()">{{movie}}</li>
+        </ul>
+
+        <!-- /* Displaying list of movies using computed and watcher */ -->
+        <p v-if="showMessage" style="color:red;">You can add only five movies</p>
+        <ul>
+            <li v-for="movie in moviesAsText">{{movie}}</li>
+        </ul>
+
+
+    </div>
+</body>
+
+<script>
+    const { createApp, ref, reactive, computed, watch } = Vue;
+
+    createApp({
+        setup() {
+
+            const showMessage = ref(false);
+
+            const newMovie = reactive({
+                title: "",
+                year:0
+            });
+
+            const movies = reactive([
+                {title: "Movie 1", year:2001}, 
+                {title: "Movie 2", year:2001},
+                {title: "Movie 3", year:2003}
+            ]);
+
+            // function for getting all movies:
+            function getAllMoviewInText(){
+                return movies.map((movie) => {
+                    return movie.title + " released in "+movie.year;
+                });
+            }
+
+            // using computed and watchers..
+            const moviesAsText = computed(() => {
+                return movies.map((movie) => {
+                    return `${movie.title} released in ${movie.year}`;
+                });
+            });
+
+            watch(movies, ()=>{
+                if(movies.length >= 5){
+                    showMessage.value = true;
+                }
+                else{
+                    showMessage.value = false;
+                    }
+                }
+            );
+
+            function addMoview() {
+                if(movies.length < 5){
+                    if(newMovie.title.trim() == "" || newMovie.year <= 0){
+                        return alert("Please enter valid movie title | year");
+                    }
+                    movies.push({
+                        title: newMovie.title, 
+                        year: newMovie.year
+                    });
+                }
+
+                newMovie.title = "";
+                newMovie.year = 0;
+            }
+
+            function removeMovie() {
+                if(movies.length == 0) return;
+                movies.pop();
+            }
+
+            return {
+                showMessage,
+                newMovie,
+                movies, 
+                addMoview,
+                removeMovie, 
+                getAllMoviewInText, 
+                moviesAsText
+            
+            }
+        }
+        
+    }).mount("#mainApp");
+</script>
+</html>
