@@ -1,7 +1,12 @@
 <template>
   <div class="container">
+    <AddContactForm
+    @add-contact="onAddNewContact($event)"
+    ></AddContactForm>
     <div class="container">{{ message }}</div>
-    Contacts owner name: <input v-model="ownerName"></input>
+    <span class="p-2">
+      Contacts owner name: <input v-model="ownerName"></input>
+    </span>
     <div v-for="contact in contacts" :key="contact.name">
       <Contact
       :name="contact.name"
@@ -20,6 +25,8 @@
 import { ref,reactive } from 'vue';
 // Local import
 import Contact from '@/components/Contact.vue';
+import AddContactForm from '@/components/AddContactForm.vue';
+
 const message = ref('Hello Vue!');
 const ownerName = ref("");
 
@@ -59,6 +66,15 @@ function onUpdateFavourite(oldValueFromChildComponent,ownerName){
   console.log("Owner name: "+ownerName);
   return !oldValueFromChildComponent.isFavourite;
 }
+
+// on-adding new contact from in Emit action.
+function onAddNewContact(newContactObjectFromForm){
+  newContactObjectFromForm.isFavourite = true;
+  newContactObjectFromForm.owner = ownerName.value;
+  contacts.push(newContactObjectFromForm);
+}
+
+
 
 </script>
 
