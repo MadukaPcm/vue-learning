@@ -32,22 +32,15 @@ const ownerName = ref("");
 
 const contacts = reactive([
   {
-    name: "Maduka Pcm",
-    email: "madukapcm@gmail.com",
-    phone: 620141533,
-    owner: ownerName,
-    isFavourite: true,
-  },
-  {
-    name: "Kessi Maduka",
-    email: "kessimaduka@gmail.com",
+    name: "Mussa Balaa Konte",
+    email: "mussabalaakonte@gmail.com",
     phone: 7550141533,
     owner: ownerName,
     isFavourite: false,
   },
   {
-    name: "Maduka Lugoye",
-    email: "madukalugoye@gmail.com",
+    name: "Mtoto Mdogo",
+    email: "mtotomdogo@gmail.com",
     phone: 620141544,
     owner: ownerName,
     isFavourite: true,
@@ -73,7 +66,6 @@ function onAddNewContact(newContactObjectFromForm){
   newContactObjectFromForm.owner = ownerName.value;
   contacts.push(newContactObjectFromForm);
 }
-
 
 
 </script>
