@@ -25,6 +25,7 @@
     </div>
 
     <BaseDynamicComponent></BaseDynamicComponent>
+    <ParentSlotComponent></ParentSlotComponent>
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import { ref,reactive, provide } from 'vue';
 import Contact from '@/components/Contact.vue';
 import AddContactForm from '@/components/AddContactForm.vue';
 import BaseDynamicComponent from './components/dynamic-components/BaseDynamicComponent.vue';
+import ParentSlotComponent from './components/slots/ParentSlotComponent.vue';
 
 const message = ref('Hello Vue!');
 const ownerName = ref("");

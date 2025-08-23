@@ -5,6 +5,9 @@
     </keep-alive>
 
     <button class="btn btn-outline-success" @click="isFirstComponent = !isFirstComponent">Toggle Component</button>
+
+    <br />
+    <br />
 </template>
 
 <script setup>
