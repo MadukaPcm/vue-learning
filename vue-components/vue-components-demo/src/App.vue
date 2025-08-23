@@ -23,6 +23,8 @@
         ></Contact>
         </div>
     </div>
+
+    <BaseDynamicComponent></BaseDynamicComponent>
   </div>
 </template>
 
@@ -31,6 +33,7 @@ import { ref,reactive, provide } from 'vue';
 // Local import
 import Contact from '@/components/Contact.vue';
 import AddContactForm from '@/components/AddContactForm.vue';
+import BaseDynamicComponent from './components/dynamic-components/BaseDynamicComponent.vue';
 
 const message = ref('Hello Vue!');
 const ownerName = ref("");
