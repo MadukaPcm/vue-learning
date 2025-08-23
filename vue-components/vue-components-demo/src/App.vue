@@ -1,34 +1,42 @@
 <template>
   <div class="container">
+    <div class="row p-2 mb-2">
+      <div class="col-6">
+        Owner Name: <input v-model="ownerName" />
+      </div>
+      <div class="col-6">
+        Max Lucky Number: <input v-model.number="maxNumber" />
+      </div>
+    </div>
     <AddContactForm
     @add-contact="onAddNewContact($event)"
     ></AddContactForm>
-    <div class="container">{{ message }}</div>
-    <span class="p-2">
-      Contacts owner name: <input v-model="ownerName"></input>
-    </span>
-    <div v-for="contact in contacts" :key="contact.name">
-      <Contact
-      :name="contact.name"
-      :email="contact.email"
-      :phone="contact.phone"
-      :owner="contact.owner"
-      :isFavourite="contact.isFavourite"
-      @update-favourite="contact.isFavourite = onUpdateFavourite($event,contact.owner)"
-      ></Contact>
+    <div class="row">
+      <div class="col col-12" v-for="contact in contacts" :key="contact.name">
+        <Contact
+        :name="contact.name"
+        :email="contact.email"
+        :phone="contact.phone"
+        :owner="contact.owner"
+        :isFavourite="contact.isFavourite"
+        @update-favourite="contact.isFavourite = onUpdateFavourite($event,contact.owner)"
+        ></Contact>
+        </div>
     </div>
-    <!-- <button-counter></button-counter> -->
   </div>
 </template>
 
 <script setup>
-import { ref,reactive } from 'vue';
+import { ref,reactive, provide } from 'vue';
 // Local import
 import Contact from '@/components/Contact.vue';
 import AddContactForm from '@/components/AddContactForm.vue';
 
 const message = ref('Hello Vue!');
 const ownerName = ref("");
+
+const maxNumber = ref(100);
+provide("maxLuckyNumber", maxNumber);
 
 const contacts = reactive([
   {

@@ -1,6 +1,6 @@
 <template>
     <div class="container p-2 m-2">
-        <h1>Add New Contact</h1>
+        <h5>Add New Contact</h5>
         <form @submit.prevent="AddNewContact()">
             <div class="row">
             <div class="col-4 form-input">
@@ -13,8 +13,8 @@
                 <input type="text" v-model.trim="contact.phone" placeholder="Enter contact phone" required>
             </div>
             </div>
-            <div class="col-4 p-2 float-center">
-            <button class="float-center">Submit</button>
+            <div class="col-4 p-2 form-control float-center">
+            <button class="btn btn-outline-success float-center">Add Contact</button>
             </div>
         </form>
     </div>
