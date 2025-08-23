@@ -1,5 +1,8 @@
 <template>
-    <component :is="isFirstComponent ? FirstComponent : SecondComponent"></component>
+    <!-- Using / wrapping component within keep-alive the widgets will not be unmounted [ using include and exlude for specific or multiple ] -->
+    <keep-alive :include="['FirstComponent',]" :exclude="['SecondComponent']"> 
+        <component :is="isFirstComponent ? FirstComponent : SecondComponent"></component>
+    </keep-alive>
 
     <button class="btn btn-outline-success" @click="isFirstComponent = !isFirstComponent">Toggle Component</button>
 </template>
